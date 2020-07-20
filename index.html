@@ -15,9 +15,21 @@
 				pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le matin
 				ou avec un goûter réconfortant. Mais attention, vous verrez qu'il est
 				difficile de s'arrêter.
-			</p>
+      </p>
+
+      <h2>Contactez nous</h2>
+			<p>Adresse : {{ adress }}</p>
+			<p>Téléphone :{{ telephone }} </p>
+			<p>Email : {{ email }}</p>
+			<p>Horaires :</p>
+			<ul>
+				<li>L-V: 06:00 à 16:00</li>
+				<li>Samedi: 07:00 à 14:00</li>
+				<li>Dimanche: 07:00 à 12:00</li>
+      </ul>
+
 			<footer class="footer">
-				<p>Copyright La belle vue 2020</p>
+				<p>Copyright {{ restaurantName }} 2020</p>
 			</footer>
 		</div>
   </body>
@@ -26,8 +38,17 @@
     const app = new Vue({
       el: '#app',
       data: {
-        restaurantName: "La Belle Vue"
-      }
+        restaurantName: "Café avec vue",
+        adress: "18 avenue du Beurre, Paris, France",
+        telephone: "01 88 88 88 88",
+        email: "hello@cafewithavue.bakery"
+      },
+      computed: {
+					copyright() {
+						const currentYear = new Date().getFullYear()
+						return `Copyright ${this.restaurantName} ${currentYear}`
+					}
+				}
     })
   </script>
 </html>
