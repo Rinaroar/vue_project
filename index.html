@@ -15,7 +15,32 @@
 				pain et nos merveilleuses pâtisseries. Faites vous plaisir dès le matin
 				ou avec un goûter réconfortant. Mais attention, vous verrez qu'il est
 				difficile de s'arrêter.
-      </p>
+			</p>
+
+			<section class="menu">
+				<h2>Menu</h2>
+				<div v-for="item in simpleMenu" :key="item.name" class="menu-item">
+					<img
+						class="menu-item__image"
+						:src="item.image.source"
+						:alt="item.image.alt"
+					/>
+					<div>
+						<h3>{{item.name}}</h3>
+						<p v-if="item.inStock">En stock</p>
+						<p v-else>En rupture de stock</p>
+						<div>
+							<label for="add-item-quantity">Quantité : {{ item.quantity }}</label>
+							<input v-model.number="item.quantity" id="add-item-quantity" type="number"/>
+							<button @click="addToShoppingCart(item.quantity)">Ajouter au panier d'achat</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<aside class="shopping-cart">
+				<h2>Panier d'achat : {{ shoppingCart }} articles</h2>
+			</aside>
 
       <h2>Contactez nous</h2>
 			<p>Adresse : {{ adress }}</p>
@@ -41,14 +66,49 @@
         restaurantName: "Café avec vue",
         adress: "18 avenue du Beurre, Paris, France",
         telephone: "01 88 88 88 88",
-        email: "hello@cafewithavue.bakery"
+				email: "hello@cafewithavue.bakery",
+				shoppingCart: 0,
+				simpleMenu: [
+						{
+							name: "Croissant",
+							image: {
+								source: "./assets/croissant.png",
+								alt: "Un croissant"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Baguette de pain",
+							image: {
+								source: "./assets/baguette.png",
+								alt: "Quatre baguettes de pain"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Éclair",
+							image: {
+								source: "./assets/eclair.png",
+								alt: "Éclair au chocolat"
+							},
+							inStock: false,
+							quantity: 1
+						}
+					]
       },
       computed: {
-					copyright() {
-						const currentYear = new Date().getFullYear()
-						return `Copyright ${this.restaurantName} ${currentYear}`
-					}
+				copyright() {
+					const currentYear = new Date().getFullYear()
+					return `Copyright ${this.restaurantName} ${currentYear}`
 				}
+			},
+			methods: {
+				addToShoppingCart(amount) {
+					this.shoppingCart += amount
+				}
+			}
     })
   </script>
 </html>
